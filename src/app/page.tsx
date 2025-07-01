@@ -341,7 +341,7 @@ export default function Home() {
             HentaiDiscord 2025 &middot; <a href="/terms" className="underline hover:text-blue-400">Terms</a> &middot; <a href="/privacy" className="underline hover:text-blue-400">Privacy</a>
           </span>
           <span className="text-gray-500">
-            Also check out: <a href="https://www.hentaidiscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">AnimeDiscord.com</a> - Anime Discord Servers
+            Also check out: <a href="https://www.hentaidiscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">HentaiDiscord.com</a> - Anime Discord Servers
           </span>
         </div>
       </footer>
