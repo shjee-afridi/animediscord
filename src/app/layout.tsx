@@ -208,6 +208,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "name": "Anime Discord - Best SFW Anime Discord Servers",
       "description": "Discover the top Anime Discord servers with active SFW anime communities, roleplay, and exclusive content.",
       "url": "https://animediscord.com",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hentai Discord",
+        "url": "https://hentaidiscord.com"
+      },
+      "datePublished": "2024-01-01",
+      "dateModified": "2025-07-01",
       "mainEntity": {
         "@type": "ItemList",
         "name": "Discord Server Directory",
@@ -277,7 +284,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "price": "0",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
-        "url": "https://animediscord.com"
+        "url": "https://hentaidiscord.com",
+        "priceValidUntil": "2025-12-31",
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "0",
+            "currency": "USD"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 0,
+              "maxValue": 0,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 0,
+              "maxValue": 0,
+              "unitCode": "DAY"
+            }
+          }
+        }
       },
       "aggregateRating": {
         "@type": "AggregateRating",
