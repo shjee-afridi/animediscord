@@ -15,7 +15,7 @@ When you access or use AnimeDiscord, we may collect the following types of data:
 
 #### a. **Account Information**
 
-* Discord User ID, username, and avatar
+* Discord User ID, username, and avatar.
 * Publicly available Discord account data via OAuth
 
 #### b. **Usage Data**
