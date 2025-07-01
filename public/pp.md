@@ -120,7 +120,13 @@ AnimeDiscord is not intended for users under the age of 13. We do not knowingly 
 
 ---
 
-### 10. 🔄 Policy Changes
+### 10. 🌐 Related Websites
+
+This service is part of a network of Discord server directories operated under the same privacy standards. Our sister site [**HentaiDiscord.com**](https://www.hentaidiscord.com/) follows identical privacy practices for anime-focused Discord communities.
+
+---
+
+### 11. 🔄 Policy Changes
 
 We may update this Privacy Policy at any time. All changes will be reflected on this page. Continued use of AnimeDiscord after any changes constitutes acceptance of the updated policy.
 

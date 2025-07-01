@@ -103,7 +103,13 @@ If you have questions or concerns regarding these Terms, please contact our admi
 
 ---
 
-### 11. 🔄 Changes to the Terms
+### 11. 🌐 Related Websites
+
+This service is part of a network of Discord server directories. Visit our sister site [**HentaiDiscord.com**](https://www.hentaidiscord.com/) for anime-focused Discord servers and communities.
+
+---
+
+### 12. 🔄 Changes to the Terms
 
 We reserve the right to update or modify these Terms at any time. Continued use of AnimeDiscord after changes constitutes acceptance of the new Terms. It is your responsibility to review these Terms periodically.
 

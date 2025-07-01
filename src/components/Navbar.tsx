@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePWAInstall, useNotificationPrompt } from './PWAInstallPrompt';
 import Link from 'next/link';
-import { FaBars, FaHome, FaUser, FaThLarge, FaDiscord, FaBell, FaBellSlash } from 'react-icons/fa';
+import { FaBars, FaHome, FaUser, FaThLarge, FaDiscord, FaBell, FaBellSlash, FaGlobe } from 'react-icons/fa';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -31,6 +31,7 @@ export default function Navbar() {
         <Link href="/profile" className="flex items-center gap-1 hover:text-blue-200 transition"><FaUser /> Profile</Link>
         <Link href="/dashboard" className="flex items-center gap-1 hover:text-blue-200 transition"><FaThLarge /> Dashboard</Link>
         <a href="https://discord.gg/35CXp4rFC2" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-200 transition"><FaDiscord /> Support</a>
+        {/* <a href="https://www.hentaidiscord.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-200 transition text-blue-300"><FaGlobe /> HentaiDiscord</a> */}
         <button
           onClick={handleInstall}
           className={`flex items-center gap-1 px-3 py-1 bg-white/10 rounded hover:bg-white/20 transition${(!deferredPrompt || isInstalled) ? ' opacity-50 cursor-not-allowed' : ''}`}
