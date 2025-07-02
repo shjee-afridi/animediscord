@@ -274,6 +274,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "name": "Anime Discord Server Directory",
       "description": "Discover and review Discord servers in our comprehensive directory featuring SFW anime communities",
       "url": "https://animediscord.com",
+      "image": "https://animediscord.com/icon-512x512.png",
       "brand": {
         "@type": "Brand",
         "name": "Anime Discord"
@@ -292,6 +293,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "@type": "MonetaryAmount",
             "value": "0",
             "currency": "USD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "US"
           },
           "deliveryTime": {
             "@type": "ShippingDeliveryTime",

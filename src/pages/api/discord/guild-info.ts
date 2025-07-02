@@ -31,37 +31,58 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       channels.find((ch: any) => ch.type === 0 && ch.permissions && (parseInt(ch.permissions) & CREATE_INSTANT_INVITE)) ||
       channels.find((ch: any) => ch.type === 0);
 
-    // Create invite
+    // Create or reuse invite
     let invite = null;
     let inviteError = null;
     let canPasteInvite = false;
     if (textChannel) {
-      const inviteRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bot ${botToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          max_age: 0,
-          max_uses: 0,
-          unique: true,
-        }),
+      // First check if we already have existing invites for this channel to avoid creating duplicates
+      const existingInvitesRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
+        headers: { Authorization: `Bot ${botToken}` },
       });
-      if (inviteRes.ok) {
-        invite = await inviteRes.json();
-      } else {
-        let errMsg = `Failed to create invite: ${inviteRes.status} ${inviteRes.statusText}`;
-        try {
-          const errJson = await inviteRes.json();
-          if (errJson && errJson.message) {
-            errMsg += ` - ${errJson.message}`;
-            if (errJson.message.includes('Maximum number of invites')) {
-              canPasteInvite = true;
+      
+      if (existingInvitesRes.ok) {
+        const existingInvites = await existingInvitesRes.json();
+        // Look for a permanent invite (max_age: 0, max_uses: 0) created by our bot
+        const permanentInvite = existingInvites.find((inv: any) => 
+          inv.max_age === 0 && inv.max_uses === 0 && inv.inviter?.bot
+        );
+        
+        if (permanentInvite) {
+          // Use existing permanent invite
+          invite = permanentInvite;
+        }
+      }
+      
+      // Only create new invite if no permanent invite exists
+      if (!invite) {
+        const inviteRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bot ${botToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            max_age: 0,
+            max_uses: 0,
+            unique: false, // Allow reusing existing invites
+          }),
+        });
+        if (inviteRes.ok) {
+          invite = await inviteRes.json();
+        } else {
+          let errMsg = `Failed to create invite: ${inviteRes.status} ${inviteRes.statusText}`;
+          try {
+            const errJson = await inviteRes.json();
+            if (errJson && errJson.message) {
+              errMsg += ` - ${errJson.message}`;
+              if (errJson.message.includes('Maximum number of invites')) {
+                canPasteInvite = true;
+              }
             }
-          }
-        } catch {}
-        inviteError = errMsg;
+          } catch {}
+          inviteError = errMsg;
+        }
       }
     } else {
       inviteError = 'No suitable text channel found with CREATE_INSTANT_INVITE permission.';

@@ -38,11 +38,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       finalBanner = banner;
       finalSplash = splash;
     }
-    // --- Invite logic ---
-    // If no invite or editing, check if invite is valid
+    // --- Smart Invite Management Logic ---
+    // First, check if we have an existing server in the database with a stored invite
+    const client = await clientPromise;
+    const db = client.db('discord');
+    const collection = db.collection('servers');
+    const existingServer = await collection.findOne({ guildId: guildId.toString() });
+    
     let inviteValid = false;
-    if (finalInvite) {
-      // Validate invite
+    let storedInvite = existingServer?.link;
+    
+    // If we have a stored invite, validate it first
+    if (storedInvite && typeof storedInvite === 'string') {
+      const inviteCode = storedInvite.match(/discord\.gg\/(\w+)|discord\.com\/invite\/(\w+)/);
+      const code = inviteCode ? (inviteCode[1] || inviteCode[2]) : null;
+      if (code) {
+        const inviteRes = await fetch(`https://discord.com/api/v10/invites/${code}`, {
+          headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` },
+        });
+        if (inviteRes.ok) {
+          // Stored invite is still valid, use it
+          finalInvite = storedInvite;
+          inviteValid = true;
+        }
+      }
+    }
+    
+    // If no valid stored invite, check if the provided invite is valid
+    if (!inviteValid && finalInvite) {
       const inviteCode = finalInvite.match(/discord\.gg\/(\w+)|discord\.com\/invite\/(\w+)/);
       const code = inviteCode ? (inviteCode[1] || inviteCode[2]) : null;
       if (code) {
@@ -52,7 +75,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         inviteValid = inviteRes.ok;
       }
     }
-    if (!finalInvite || !inviteValid) {
+    
+    // Only create a new invite if we don't have any valid invite
+    if (!inviteValid) {
       // Fetch channels to find a text channel for invite
       const channelsRes = await fetch(`https://discord.com/api/v10/guilds/${guildId}/channels`, {
         headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` },
@@ -63,24 +88,50 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         channels.find((ch: any) => ch.type === 0 && ch.permissions && (parseInt(ch.permissions) & CREATE_INSTANT_INVITE)) ||
         channels.find((ch: any) => ch.type === 0);
       if (textChannel) {
-        const inviteRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ max_age: 0, max_uses: 0, unique: true }),
+        // Check if we already have existing invites for this channel to avoid creating duplicates
+        const existingInvitesRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
+          headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` },
         });
-        if (inviteRes.ok) {
-          const inviteData = await inviteRes.json();
-          finalInvite = `https://discord.gg/${inviteData.code}`;
+        
+        if (existingInvitesRes.ok) {
+          const existingInvites = await existingInvitesRes.json();
+          // Look for a permanent invite (max_age: 0, max_uses: 0) created by our bot
+          const permanentInvite = existingInvites.find((inv: any) => 
+            inv.max_age === 0 && inv.max_uses === 0 && inv.inviter?.bot
+          );
+          
+          if (permanentInvite) {
+            // Use existing permanent invite
+            finalInvite = `https://discord.gg/${permanentInvite.code}`;
+            inviteValid = true;
+          }
+        }
+        
+        // Only create new invite if no permanent invite exists
+        if (!inviteValid) {
+          const inviteRes = await fetch(`https://discord.com/api/v10/channels/${textChannel.id}/invites`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ max_age: 0, max_uses: 0, unique: false }),
+          });
+          if (inviteRes.ok) {
+            const inviteData = await inviteRes.json();
+            finalInvite = `https://discord.gg/${inviteData.code}`;
+          }
         }
       }
     }
-    // --- End Invite logic ---
   } catch (e) {
+    // If Discord API calls fail, use the provided values as fallback
     finalBanner = banner;
     finalSplash = splash;
+    // Keep the existing invite if validation failed
+    if (!finalInvite) {
+      finalInvite = link;
+    }
   }
   // --- End: Fetch latest guild info from Discord API to check banner and invite ---
 
@@ -90,10 +141,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    // Initialize database connection here (after the Discord API calls)
     const client = await clientPromise;
     const db = client.db('discord');
     const collection = db.collection('servers');
-
+    
     const block = await db.collection('admin_blocks').findOne({ userId: session.user.id });
 
     // Check if user is a Discord admin of the guild
