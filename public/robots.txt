@@ -8,5 +8,16 @@ Disallow: /login
 Disallow: /manage-servers
 Disallow: /add-server
 
+# SEO Landing Pages - Allow all crawlers but discourage user access
+Allow: /promote-discord-server
+Allow: /advertise-discord-server
+Allow: /bump-discord-server
+Allow: /discord-server-directory
+Allow: /find-discord-servers
+Allow: /discord-server-marketing
+Allow: /best-discord-servers
+Allow: /discord-server-list
+Allow: /anime-discord-servers
+
 Sitemap: https://www.animediscord.com/sitemap.xml
 Sitemap: https://www.animediscord.com/api/sitemap
