@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export const metadata = {
   title: 'Promote Discord Server - Best Server Promotion Guide 2025 | Anime Discord',
   description: 'Learn how to promote your Discord server effectively with our comprehensive guide. Discover the best Discord server promotion strategies, marketing techniques, and advertising methods to grow your community.',
@@ -17,3 +19,11 @@ export const metadata = {
     description: 'Learn how to promote your Discord server effectively with our comprehensive guide.',
   },
 };
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function PromoteDiscordServerLayout({ children }: LayoutProps) {
+  return <>{children}</>;
+}
