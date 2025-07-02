@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react'; // <-- import this
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import 'react-quill/dist/quill.snow.css';
 import Spinner from '@/components/Spinner'; // <-- import Spinner
 import { FaServer, FaTags, FaPalette, FaLanguage, FaChevronDown, FaPlus, FaTimes, FaSave, FaInfoCircle, FaTrash, FaLink } from 'react-icons/fa';
@@ -329,9 +330,11 @@ export default function ServerEditPage({ params }: { params: { guildId: string }
           {/* Banner */}
           <div className="w-full flex justify-center relative">
             {bannerMode === 'banner' ? (
-              <img
+              <Image
                 src={(bannerPreview ? bannerPreview + '?size=2048' : '/blank-banner.png')}
                 alt="Server Banner"
+                width={512}
+                height={128}
                 className="rounded-xl border border-gray-700 object-cover shadow w-full max-w-lg h-24 sm:h-32 bg-gray-900"
                 style={{ background: '#222', objectFit: 'cover' }}
               />
@@ -343,9 +346,11 @@ export default function ServerEditPage({ params }: { params: { guildId: string }
             )}
             {/* Icon overlaps banner */}
             <div className="absolute left-1/2 -translate-x-1/2 -bottom-7 sm:-bottom-10 z-10">
-              <img
+              <Image
                 src={iconPreview ? iconPreview + '?size=2048' : '/blank-icon.png'}
                 alt="Server Icon"
+                width={80}
+                height={80}
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-gray-900 shadow-lg bg-gray-900 object-cover"
                 style={{ minWidth: 64, minHeight: 64 }}
               />

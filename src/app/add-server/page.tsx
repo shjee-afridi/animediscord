@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import Spinner from '@/components/Spinner';
 import 'react-quill/dist/quill.snow.css';
 import { FaServer, FaTags, FaPalette, FaLanguage, FaChevronDown, FaPlus, FaTimes, FaSave, FaRobot, FaLink, FaInfoCircle } from 'react-icons/fa';
@@ -255,9 +256,11 @@ export default function AddServerPage() {
         {/* Server info card */}
         {serverInfo && (
           <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
-            <img
+            <Image
               src={serverInfo.icon ? `https://cdn.discordapp.com/icons/${selectedGuild}/${serverInfo.icon}.png` : '/blank-icon.png'}
               alt="Server Icon"
+              width={64}
+              height={64}
               className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border object-cover bg-gray-900"
               style={{ minWidth: 48, minHeight: 48 }}
             />
@@ -285,13 +288,15 @@ export default function AddServerPage() {
             </label>
             {serverInfo && (serverInfo.banner || serverInfo.splash) ? (
               <div className="flex flex-col items-center gap-1 sm:gap-2">
-                <img
+                <Image
                   src={
                     serverInfo.banner
                       ? `https://cdn.discordapp.com/banners/${selectedGuild}/${serverInfo.banner}.png`
                       : `https://cdn.discordapp.com/splashes/${selectedGuild}/${serverInfo.splash}.png`
                   }
                   alt="Server Banner"
+                  width={256}
+                  height={96}
                   className="rounded-lg sm:rounded-xl border border-gray-700 object-cover shadow"
                   style={{ width: '100%', maxWidth: 256, height: 72, maxHeight: 96, objectFit: 'cover', background: '#222' }}
                 />

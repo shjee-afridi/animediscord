@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import Spinner from '@/components/Spinner';
+import Image from 'next/image';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -109,7 +110,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
     `/api/servers/${params.guildId}/review`,
     fetcher
   );
-  const reviews = reviewData?.all || [];
+  const reviews = useMemo(() => reviewData?.all || [], [reviewData?.all]);
   const myReview = reviewData?.mine || null;
   const isBanned = reviewError && reviewError.status === 403;
 
@@ -135,7 +136,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
     if (reviewSubmitError) {
       setReviewSubmitError(null);
     }
-  }, [rating, comment]);
+  }, [rating, comment, reviewSubmitError]);
 
   // SWR for bump cooldown info
   const { data: bumpInfo, mutate: mutateBumpInfo } = useSWR(
@@ -544,25 +545,29 @@ export default function ServerPageClient({ params }: { params: { guildId: string
               style={{ background: server.colorTheme || '#222', imageRendering: 'auto' }}
             />
           ) : bannerUrl ? (
-            <img
+            <Image
               src={bannerUrl}
               alt="Server Banner"
+              fill
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ imageRendering: 'auto' }}
             />
           ) : (
-            <img
+            <Image
               src="/blank-banner.png"
               alt="Default Banner"
+              fill
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ imageRendering: 'auto' }}
             />
           )}
           {/* Server Icon */}
           <div className="absolute left-4 bottom-[-2.5rem] sm:bottom-[-3rem] z-10">
-            <img
+            <Image
               src={server.icon ? `https://cdn.discordapp.com/icons/${server.guildId}/${server.icon}.png?size=2048` : '/blank-icon.png'}
               alt="Server Icon"
+              width={96}
+              height={96}
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-neutral-900 shadow-lg bg-neutral-800 object-cover"
             />
           </div>
@@ -800,10 +805,12 @@ export default function ServerPageClient({ params }: { params: { guildId: string
               {pagedReviews.length === 0 && <li className="text-gray-500 py-6 text-center">No reviews yet.</li>}
               {pagedReviews.map((r: any) => (
                 <li key={r.userId} className="py-4 flex items-start gap-3">
-                  <img
+                  <Image
                     src={r.avatar || '/blank-icon.png'}
                     alt={r.username}
                     className="w-10 h-10 rounded-full border border-neutral-700 bg-neutral-800 object-cover flex-shrink-0"
+                    width={40}
+                    height={40}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">

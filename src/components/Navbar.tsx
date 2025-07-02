@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { usePWAInstall, useNotificationPrompt } from './PWAInstallPrompt';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaBars, FaHome, FaUser, FaThLarge, FaDiscord, FaBell, FaBellSlash, FaGlobe } from 'react-icons/fa';
 
 export default function Navbar() {
@@ -22,7 +23,7 @@ export default function Navbar() {
     >
       {/* Left: Logo and name */}
       <Link href="/" className="flex items-center gap-2 flex-1 group" onClick={() => setOpen(false)}>
-        <img src="/icon-48x48.png" alt="Logo" className="h-8 w-8 rounded group-hover:opacity-80 transition" />
+        <Image src="/icon-48x48.png" alt="Logo" width={32} height={32} className="h-8 w-8 rounded group-hover:opacity-80 transition" />
         <span className="font-bold text-lg tracking-wide ml-2 group-hover:text-blue-300 transition">AnimeDiscord</span>
       </Link>
       {/* Right: Desktop nav (Home, Profile, Dashboard, Support, Install App, Notifications) */}

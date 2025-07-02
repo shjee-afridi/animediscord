@@ -5,6 +5,7 @@ import ServerListItem from '@/components/ServerListItem';
 import { FaUserCircle, FaServer, FaDiscord, FaSignOutAlt, FaStar, FaRegStar, FaEnvelope, FaCommentDots } from 'react-icons/fa';
 import useSWR from 'swr';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -16,7 +17,7 @@ export default function Profile() {
     '/api/servers',
     fetcher
   );
-  const allServers = allServersData.servers || [];
+  const allServers = useMemo(() => allServersData.servers || [], [allServersData.servers]);
 
   // Fetch user's admin guilds
   const { data: adminGuilds = [], isLoading: adminGuildsLoading } = useSWR(
@@ -66,9 +67,11 @@ export default function Profile() {
         {/* Profile Header */}
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-8 w-full">
           {session.user?.image ? (
-            <img
+            <Image
               src={session.user.image}
               alt="Profile picture"
+              width={80}
+              height={80}
               className="w-20 h-20 rounded-full border-4 border-blue-500 shadow object-cover bg-gray-800"
             />
           ) : (

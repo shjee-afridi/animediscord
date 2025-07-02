@@ -52,7 +52,7 @@ export default function SearchPage({ params }: { params: { query: string } }) {
         setLoading(false);
       }
     }, 300),
-    []
+    [setLoading, setServers]
   );
 
   useEffect(() => {

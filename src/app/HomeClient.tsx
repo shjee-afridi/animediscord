@@ -116,7 +116,7 @@ export default function HomeClient() {
   // Wrap setSearch in debounce (300ms delay)
   const debouncedSetSearch = useCallback(
     debounce((value: string) => setSearch(value), 300),
-    []
+    [setSearch]
   );
 
   // Responsive: close dropdowns on outside click
