@@ -117,6 +117,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [loadingReview, setLoadingReview] = useState(false);
+  const [reviewSubmitError, setReviewSubmitError] = useState<string | null>(null);
 
   // Set rating/comment when myReview changes
   useEffect(() => {
@@ -128,6 +129,13 @@ export default function ServerPageClient({ params }: { params: { guildId: string
       setComment('');
     }
   }, [myReview]);
+
+  // Clear review error when user changes rating or comment
+  useEffect(() => {
+    if (reviewSubmitError) {
+      setReviewSubmitError(null);
+    }
+  }, [rating, comment]);
 
   // SWR for bump cooldown info
   const { data: bumpInfo, mutate: mutateBumpInfo } = useSWR(
@@ -252,22 +260,56 @@ export default function ServerPageClient({ params }: { params: { guildId: string
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingReview(true);
-    await fetch(`/api/servers/${params.guildId}/review`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rating, comment }),
-    });
+    setReviewSubmitError(null); // Clear any previous errors
+    
+    try {
+      const response = await fetch(`/api/servers/${params.guildId}/review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating, comment }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'An error occurred' }));
+        setReviewSubmitError(errorData.error || 'Failed to post review');
+        setLoadingReview(false);
+        return;
+      }
+      
+      // Success - revalidate reviews
+      mutateReviews();
+      setReviewSubmitError(null);
+    } catch (error) {
+      setReviewSubmitError('Failed to post review. Please try again.');
+    }
+    
     setLoadingReview(false);
-    mutateReviews(); // revalidate reviews
   };
 
   const handleDelete = async () => {
     setLoadingReview(true);
-    await fetch(`/api/servers/${params.guildId}/review`, { method: 'DELETE' });
+    setReviewSubmitError(null); // Clear any previous errors
+    
+    try {
+      const response = await fetch(`/api/servers/${params.guildId}/review`, { method: 'DELETE' });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'An error occurred' }));
+        setReviewSubmitError(errorData.error || 'Failed to delete review');
+        setLoadingReview(false);
+        return;
+      }
+      
+      // Success - reset form and revalidate
+      setRating(0);
+      setComment('');
+      mutateReviews();
+      setReviewSubmitError(null);
+    } catch (error) {
+      setReviewSubmitError('Failed to delete review. Please try again.');
+    }
+    
     setLoadingReview(false);
-    setRating(0);
-    setComment('');
-    mutateReviews(); // revalidate reviews
   };
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -728,6 +770,11 @@ export default function ServerPageClient({ params }: { params: { guildId: string
                   required
                   disabled={loadingReview}
                 />
+                {reviewSubmitError && (
+                  <div className="bg-red-900/50 border border-red-700 rounded-lg p-3 text-red-200 text-sm">
+                    {reviewSubmitError}
+                  </div>
+                )}
                 <div className="flex gap-2 justify-end">
                   <button
                     type="submit"
