@@ -4,6 +4,10 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Spinner from '@/components/Spinner';
 import { FaServer, FaExternalLinkAlt, FaInfoCircle, FaRobot } from 'react-icons/fa';
+import { Metadata } from 'next';
+
+// Note: Since this is a client component, we'll need to handle metadata differently
+// We'll create a wrapper component to handle metadata properly
 
 export default function ManageServersPage() {
   const { data: session, status } = useSession();

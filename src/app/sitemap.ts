@@ -30,24 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/dashboard`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/manage-servers`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/profile`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    },
-    {
       url: `${baseUrl}/terms`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -60,6 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.4,
     },
   ]
+
   // SEO Landing Pages - High priority for crawlers
   const seoPages: MetadataRoute.Sitemap = [
     {
@@ -147,7 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add category pages based on your categories
     const categories = [
       'anime', 'gaming', 'art', 'music', 'community', 'roleplay', 
-      'sfw', 'social', 'memes', 'study', 'tech', 'trading', 'lgbtq+', 'dating', 'events', 'streaming', 'bots', 'programming', 'language-learning', 'fitness', 'health', 'food', 'pets', 'travel', 'news', 'politics', 'education', 'comedy', 'movies', 'tv-shows', 'books', 'writing', 'photography', 'design', 'fashion', 'sports', 'cars', 'music-production', 'gaming-community', 'anime-community', 'art-community'
+      'nsfw', 'social', 'memes', 'study', 'tech', 'trading', 'hentai', 'porn', 'nudes', 'adult', 'lgbtq+', 'dating', 'events', 'streaming', 'bots', 'programming', 'language-learning', 'fitness', 'health', 'food', 'pets', 'travel', 'news', 'politics', 'education', 'comedy', 'movies', 'tv-shows', 'books', 'writing', 'photography', 'design', 'fashion', 'sports', 'cars', 'music-production', 'gaming-community', 'anime-community', 'art-community', 'nsfw-community', 'adult-community', 'hentai-community'
     ]
     
     categoryPages = categories.map(category => ({
@@ -160,5 +143,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error generating category pages for sitemap:', error)
   }
 
-  return [...staticPages, ...serverPages, ...categoryPages]
+  return [...staticPages, ...seoPages, ...serverPages, ...categoryPages]
 }

@@ -1,17 +1,27 @@
 // src/app/home/page.tsx
-import Home from '../page';
-import React from 'react';
-import Head from 'next/head';
+import { Metadata } from 'next';
+import HomeClient from '../HomeClient';
 
-export default function HomeWithCanonical(props: any) {
-  return (
-    <>
-      <Head>
-        <link rel="canonical" href="https://animediscord.com/home" />
-        <title>Anime Discord Home</title>
-        <meta name="description" content="Welcome to the Anime Discord Home page. Discover and share Discord servers! Unique content for /home." />
-      </Head>
-      <Home {...props} />
-    </>
-  );
+export const metadata: Metadata = {
+  title: 'Anime Discord Home - Best SFW Anime Discord Servers',
+  description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
+  alternates: {
+    canonical: 'https://animediscord.com/home'
+  },
+  openGraph: {
+    title: 'Anime Discord Home - Best SFW Anime Discord Servers',
+    description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
+    url: 'https://animediscord.com/home',
+    siteName: 'Anime Discord',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Anime Discord Home - Best SFW Anime Discord Servers',
+    description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
+  },
+};
+
+export default function HomeWithCanonical() {
+  return <HomeClient />;
 }
