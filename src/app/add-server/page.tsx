@@ -102,7 +102,11 @@ export default function AddServerPage() {
       alert('Please select a server first.');
       return;
     }
-    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=1366467731200675871&permissions=8&scope=bot&guild_id=${selectedGuild}&redirect_uri=${encodeURIComponent('http://animediscord.com/add-server')}&response_type=code`;
+    // Use current domain for redirect URI to match Discord app settings
+    const currentDomain = window.location.origin;
+    const redirectUri = `${currentDomain}/add-server`;
+    const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || '1366467731200675871';
+    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=8&scope=bot&guild_id=${selectedGuild}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
     window.location.href = inviteUrl;
   };
 
