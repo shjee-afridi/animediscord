@@ -59,7 +59,7 @@ export default function HomeClient() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   
   // Check if user has servers
-  const { hasServers } = useUserServers();
+  const { hasServers, isLoading: userServersLoading, isLoggedIn } = useUserServers();
 
   // Fetch main server list (for "All Servers" tab)
   const allServersUrl =
@@ -241,8 +241,8 @@ export default function HomeClient() {
         ))}
       </div>
 
-      {/* Add Your Server Button - Only show if user doesn't have servers */}
-      {!hasServers && (
+      {/* Add Your Server Button - Show for non-logged-in users or logged-in users without servers */}
+      {!userServersLoading && (!isLoggedIn || !hasServers) && (
         <div className="w-full max-w-lg mb-6 flex justify-center">
           <button
             onClick={() => router.push('/add-server')}
