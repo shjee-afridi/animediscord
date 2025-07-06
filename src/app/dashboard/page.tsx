@@ -138,7 +138,7 @@ export default function Dashboard() {
     const currentDomain = window.location.origin;
     const redirectUri = `${currentDomain}/dashboard`;
     const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || '1366467731200675871';
-    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=8&scope=bot&guild_id=${selectedGuild}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
+    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=277025508416&scope=bot%20applications.commands&guild_id=${selectedGuild}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
     window.location.href = inviteUrl;
   };
 
