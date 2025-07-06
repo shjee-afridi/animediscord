@@ -8,6 +8,7 @@ import Spinner from '@/components/Spinner';
 import 'react-quill/dist/quill.snow.css';
 import { FaServer, FaTags, FaPalette, FaLanguage, FaChevronDown, FaPlus, FaTimes, FaSave, FaRobot, FaLink, FaInfoCircle } from 'react-icons/fa';
 import { CATEGORIES } from '@/constants/categories';
+import { invalidateServerListCaches } from '@/lib/cache';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -192,6 +193,8 @@ export default function AddServerPage() {
     setShowConfirm(false);
     if (response.ok) {
       setShowSuccessDialog(true);
+      // Invalidate caches for server list
+      invalidateServerListCaches();
     } else {
       const error = await response.json();
       setErrorMessage(error.error || 'Failed to save server details.');

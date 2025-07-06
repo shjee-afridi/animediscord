@@ -9,6 +9,7 @@ import { FaServer, FaTags, FaPalette, FaLanguage, FaChevronDown, FaPlus, FaTimes
 import { useRouter } from 'next/navigation';
 import useSWR, { mutate } from 'swr';
 import { CATEGORIES } from '@/constants/categories';
+import { invalidateServerListCaches, invalidateServerCaches } from '@/lib/cache';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -254,6 +255,12 @@ export default function ServerEditPage({ params }: { params: { guildId: string }
     setSaving(false);
     setShowConfirm(false);
     if (res.ok) {
+      const result = await res.json();
+      // Invalidate caches if the API indicates cache should be invalidated
+      if (result.invalidateCache) {
+        await invalidateServerCaches(params.guildId);
+        await invalidateServerListCaches();
+      }
       router.push(`/server/${params.guildId}`);
     } else {
       const error = await res.json().catch(() => ({}));

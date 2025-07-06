@@ -83,7 +83,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { guildId },
         { $set: { averageRating: avg, reviewCount: allReviews.length } }
       );
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ 
+        success: true,
+        invalidateCache: true // Signal to client to invalidate cache
+      });
     }
     if (req.method === 'DELETE') {
       // Allow admin to delete any user's review
@@ -100,7 +103,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { guildId },
         { $set: { averageRating: avg, reviewCount: allReviews.length } }
       );
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ 
+        success: true,
+        invalidateCache: true // Signal to client to invalidate cache
+      });
     }
   }
 

@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { invalidateReviewCaches, invalidateServerListCaches } from '@/lib/cache';
 
 
 type GuildStats = {
@@ -278,6 +279,14 @@ export default function ServerPageClient({ params }: { params: { guildId: string
       }
       
       // Success - revalidate reviews
+      const result = await response.json();
+      
+      // Success - revalidate reviews and server lists
+      mutateReviews();
+      if (result.invalidateCache) {
+        await invalidateReviewCaches(params.guildId);
+        await invalidateServerListCaches();
+      }
       mutateReviews();
       setReviewSubmitError(null);
     } catch (error) {
@@ -301,10 +310,16 @@ export default function ServerPageClient({ params }: { params: { guildId: string
         return;
       }
       
+      const result = await response.json();
+      
       // Success - reset form and revalidate
       setRating(0);
       setComment('');
       mutateReviews();
+      if (result.invalidateCache) {
+        await invalidateReviewCaches(params.guildId);
+        await invalidateServerListCaches();
+      }
       setReviewSubmitError(null);
     } catch (error) {
       setReviewSubmitError('Failed to delete review. Please try again.');

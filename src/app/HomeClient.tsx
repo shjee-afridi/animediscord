@@ -72,8 +72,10 @@ export default function HomeClient() {
         + (search ? `&search=${encodeURIComponent(search)}` : '') // <-- add this
       : null;
   const { data: allServersData } = useSWR(allServersUrl, fetcher, {
-    dedupingInterval: 60000, // 1 minute
-    revalidateOnFocus: false,
+    dedupingInterval: 30000, // 30 seconds
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 60000, // Auto-refresh every minute
     errorRetryCount: 2,
   });
 
@@ -87,8 +89,10 @@ export default function HomeClient() {
         + (selectedTags.length ? selectedTags.map(tag => `&tags=${encodeURIComponent(tag)}`).join('') : '')
       : null;
   const { data: trendingData } = useSWR(trendingUrl, fetcher, {
-    dedupingInterval: 60000, // 1 minute
-    revalidateOnFocus: false,
+    dedupingInterval: 30000, // 30 seconds
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 60000, // Auto-refresh every minute
     errorRetryCount: 2,
   });
 
@@ -102,8 +106,10 @@ export default function HomeClient() {
         + (selectedTags.length ? selectedTags.map(tag => `&tags=${encodeURIComponent(tag)}`).join('') : '')
       : null;
   const { data: recentData } = useSWR(recentUrl, fetcher, {
-    dedupingInterval: 60000, // 1 minute
-    revalidateOnFocus: false,
+    dedupingInterval: 30000, // 30 seconds
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 60000, // Auto-refresh every minute
     errorRetryCount: 2,
   });
 
@@ -136,7 +142,7 @@ export default function HomeClient() {
       <StructuredData />
       {/* Add h1 for SEO */}
       <h1 className="visually-hidden">
-        Anime Discord – Discover and Share the Best SFW Anime Servers
+        Hentai Discord – Discover and Share the Best NSFW Anime Servers
       </h1>
       {/* Modern Search Bar with dark theme support */}
       <form
@@ -339,10 +345,10 @@ export default function HomeClient() {
       <footer className="w-full flex flex-col items-center justify-center text-xs text-gray-400 py-2 mt-8 border-t border-gray-800 bg-transparent flex-shrink-0">
         <div className="flex flex-col items-center gap-2">
           <span>
-            AnimeDiscord 2025 &middot; <a href="/terms" className="underline hover:text-blue-400">Terms</a> &middot; <a href="/privacy" className="underline hover:text-blue-400">Privacy</a>
+            HentaiDiscord 2025 &middot; <a href="/terms" className="underline hover:text-blue-400">Terms</a> &middot; <a href="/privacy" className="underline hover:text-blue-400">Privacy</a>
           </span>
           <span className="text-gray-500">
-            Also check out: <a href="https://www.hentaidiscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">HentaiDiscord.com</a> - Hentai Discord Servers
+            Also check out: <a href="https://www.animediscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">AnimeDiscord.com</a> - Anime Discord Servers
           </span>
         </div>
       </footer>

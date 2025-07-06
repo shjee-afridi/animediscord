@@ -69,5 +69,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     { upsert: true }
   );
 
-  return res.status(200).json({ success: true, bumpedAt: now });
+  return res.status(200).json({ 
+    success: true, 
+    bumpedAt: now,
+    invalidateCache: true // Signal to client to invalidate cache
+  });
 }

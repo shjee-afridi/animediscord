@@ -2,12 +2,15 @@
 'use client';
 import { SessionProvider } from 'next-auth/react';
 import ServiceWorkerRegister from './ServiceWorkerRegister';
+import SWRProvider from './SWRProvider';
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ServiceWorkerRegister />
-      {children}
+      <SWRProvider>
+        <ServiceWorkerRegister />
+        {children}
+      </SWRProvider>
     </SessionProvider>
   );
 }

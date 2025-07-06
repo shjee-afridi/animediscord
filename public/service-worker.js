@@ -70,11 +70,17 @@ self.addEventListener('fetch', event => {
           .then(response => {
             if (response.ok) {
               cache.put(request, response.clone());
-              limitCacheSize(API_CACHE, 50); // Increase API cache size
+              limitCacheSize(API_CACHE, 30); // Reduce cache size
             }
             return response;
           })
           .catch(() => cached); // fallback to cache if offline
+        
+        // For server and review APIs, prefer fresh data
+        if (url.pathname.includes('/api/servers') || url.pathname.includes('/api/reviews')) {
+          return fetchPromise || cached;
+        }
+        
         return cached || fetchPromise;
       })
     );
