@@ -32,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const client = await clientPromise;
     const db = client.db('discord');
     const reviews = db.collection('reviews');
+    const dailyStats = db.collection('server_daily_stats');
 
     const block = await db.collection('admin_blocks').findOne({ userId: session.user.id });
     if (req.method === 'POST') {
@@ -75,6 +76,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         { upsert: true }
       );
+      
+      // Track daily rating activity
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0];
+      await dailyStats.updateOne(
+        { 
+          guildId: guildId as string,
+          date: dateStr 
+        },
+        { 
+          $inc: { rating: 1 },
+          $set: { lastUpdated: now }
+        },
+        { upsert: true }
+      );
+      
       // --- Update average rating and review count ---
       const allReviews = await reviews.find({ guildId }).toArray();
       const avg = allReviews.length ? allReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / allReviews.length : 0;

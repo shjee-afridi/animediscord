@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const db = client.db('discord');
   const stats = db.collection('server_stats');
   const visitLogs = db.collection('server_visit_logs');
+  const dailyStats = db.collection('server_daily_stats');
 
   if (req.method === 'POST') {
     const { type } = req.body;
@@ -25,6 +26,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       req.socket?.remoteAddress ||
       'unknown';
     const now = new Date();
+    const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    // Helper function to update daily stats
+    const updateDailyStats = async (statType: string) => {
+      await dailyStats.updateOne(
+        { 
+          guildId: guildId.toString(),
+          date: dateStr 
+        },
+        { 
+          $inc: { [statType]: 1 },
+          $set: { lastUpdated: now }
+        },
+        { upsert: true }
+      );
+    };
 
     if (type === 'visit') {
       // Only count a visit from the same user/IP once per 24h
@@ -45,6 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { $set: { lastVisit: now } },
           { upsert: true }
         );
+        await updateDailyStats('visit');
         return res.status(200).json({ success: true, counted: true });
       } else {
         return res.status(200).json({ success: true, counted: false });
@@ -70,6 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { $set: { lastCopy: now } },
           { upsert: true }
         );
+        await updateDailyStats('copy');
         return res.status(200).json({ success: true, counted: true });
       } else {
         return res.status(200).json({ success: true, counted: false });
@@ -95,6 +114,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           type: 'join',
           joinedAt: now,
         });
+        await updateDailyStats('join');
         return res.status(200).json({ success: true, counted: true });
       } else {
         return res.status(200).json({ success: true, counted: false });
@@ -107,6 +127,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { $inc: { [type]: 1 } },
       { upsert: true }
     );
+    await updateDailyStats(type);
     return res.status(200).json({ success: true });
   }
 

@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import Spinner from '@/components/Spinner';
 import Image from 'next/image';
 import { Bar } from 'react-chartjs-2';
+import DailyStatsChart from '@/components/DailyStatsChart';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -111,6 +112,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
     `/api/servers/${params.guildId}/review`,
     fetcher
   );
+  
   const reviews = useMemo(() => reviewData?.all || [], [reviewData?.all]);
   const myReview = reviewData?.mine || null;
   const isBanned = reviewError && reviewError.status === 403;
@@ -181,6 +183,12 @@ export default function ServerPageClient({ params }: { params: { guildId: string
   const isAdmin = session && server && session.user?.id && server.userId === session.user.id;
   const { data: stats } = useSWR(
     isAdmin ? `/api/servers/${params.guildId}/stat` : null,
+    fetcher
+  );
+  
+  // Daily stats (admin only)
+  const { data: dailyStats } = useSWR(
+    isAdmin ? `/api/servers/${params.guildId}/daily-stats?days=30` : null,
     fetcher
   );
 
@@ -278,7 +286,6 @@ export default function ServerPageClient({ params }: { params: { guildId: string
         return;
       }
       
-      // Success - revalidate reviews
       const result = await response.json();
       
       // Success - revalidate reviews and server lists
@@ -287,7 +294,6 @@ export default function ServerPageClient({ params }: { params: { guildId: string
         await invalidateReviewCaches(params.guildId);
         await invalidateServerListCaches();
       }
-      mutateReviews();
       setReviewSubmitError(null);
     } catch (error) {
       setReviewSubmitError('Failed to post review. Please try again.');
@@ -710,32 +716,63 @@ export default function ServerPageClient({ params }: { params: { guildId: string
           </div>
           {/* Admin Controls */}
           {isAdmin && (
-            <div className="mb-4 flex gap-2">
+            <div className="mb-4 flex flex-wrap gap-2">
               <a
                 href={`/server/${params.guildId}/details`}
                 className="px-4 py-2 bg-yellow-500 text-white rounded-xl font-bold hover:bg-yellow-600 transition"
               >Edit Listing</a>
+              
+              {/* Test Data Generator (only show if no recent daily data) */}
+              {(!dailyStats || dailyStats.slice(-7).every((day: any) => day.visit === 0 && day.copy === 0 && day.join === 0 && day.bump === 0)) && (
+                <button
+                  onClick={async () => {
+                    if (confirm('Generate sample analytics data for the last 14 days? This will help you see how the daily analytics work.')) {
+                      const res = await fetch(`/api/servers/${params.guildId}/generate-test-data`, { method: 'POST' });
+                      if (res.ok) {
+                        alert('Test data generated! Refresh the page to see the daily analytics.');
+                        window.location.reload();
+                      } else {
+                        alert('Failed to generate test data.');
+                      }
+                    }
+                  }}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition text-sm"
+                >Generate Sample Data</button>
+              )}
             </div>
           )}
           {/* Stats (Admin) */}
-          {isAdmin && stats && (
-            <div className="mb-6 p-4 border border-neutral-800 rounded-xl bg-neutral-800/60 text-gray-200">
-              <h2 className="text-lg font-bold mb-2">Server Statistics</h2>
-              <div className="w-full max-w-xs mx-auto" style={{ minHeight: 220 }}>
-                {statsChartData && (
-                  <Bar
-                    data={statsChartData}
-                    options={statsChartOptions}
-                    height={220}
-                  />
-                )}
-              </div>
-              <div className="flex flex-wrap gap-4 justify-center mt-4 text-xs sm:text-sm">
-                <div><span className="font-bold">Visits:</span> {stats.visit || 0}</div>
-                <div><span className="font-bold">Copied Link:</span> {stats.copy || 0}</div>
-                <div><span className="font-bold">Join Clicks:</span> {stats.join || 0}</div>
-                <div><span className="font-bold">Bumps:</span> {stats.bump || 0}</div>
-              </div>
+          {isAdmin && (stats || dailyStats) && (
+            <div className="mb-6 space-y-4">
+              {/* Daily Analytics Chart */}
+              {dailyStats && (
+                <DailyStatsChart 
+                  data={dailyStats}
+                  className="w-full"
+                />
+              )}
+              
+              {/* Total Stats Summary */}
+              {stats && (
+                <div className="p-4 border border-neutral-800 rounded-xl bg-neutral-800/60 text-gray-200">
+                  <h2 className="text-lg font-bold mb-2">Total Statistics</h2>
+                  <div className="w-full max-w-xs mx-auto" style={{ minHeight: 220 }}>
+                    {statsChartData && (
+                      <Bar
+                        data={statsChartData}
+                        options={statsChartOptions}
+                        height={220}
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-4 justify-center mt-4 text-xs sm:text-sm">
+                    <div><span className="font-bold">Total Visits:</span> <span className="text-blue-400">{stats.visit || 0}</span></div>
+                    <div><span className="font-bold">Total Copied:</span> <span className="text-green-400">{stats.copy || 0}</span></div>
+                    <div><span className="font-bold">Total Joins:</span> <span className="text-yellow-400">{stats.join || 0}</span></div>
+                    <div><span className="font-bold">Total Bumps:</span> <span className="text-purple-400">{stats.bump || 0}</span></div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
           {/* Reviews Section - Modern, Neat, Mobile Friendly */}
@@ -823,9 +860,9 @@ export default function ServerPageClient({ params }: { params: { guildId: string
                   <Image
                     src={r.avatar || '/blank-icon.png'}
                     alt={r.username}
-                    className="w-10 h-10 rounded-full border border-neutral-700 bg-neutral-800 object-cover flex-shrink-0"
                     width={40}
                     height={40}
+                    className="w-10 h-10 rounded-full border border-neutral-700 bg-neutral-800 object-cover flex-shrink-0"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">

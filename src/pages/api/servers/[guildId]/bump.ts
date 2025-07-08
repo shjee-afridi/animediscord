@@ -60,6 +60,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     { upsert: true }
   );
 
+  // Track daily bump stats
+  const dateStr = now.toISOString().split('T')[0];
+  await db.collection('server_daily_stats').updateOne(
+    { 
+      guildId: guildIdStr,
+      date: dateStr 
+    },
+    { 
+      $inc: { bump: 1 },
+      $set: { lastUpdated: now }
+    },
+    { upsert: true }
+  );
+
   // Create or update bump reminder for this user/server
   const reminders = db.collection('bump_reminders');
   const remindAt = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
