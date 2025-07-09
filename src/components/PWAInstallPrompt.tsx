@@ -74,7 +74,13 @@ export function useNotificationPrompt() {
   const [notifMessage, setNotifMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    setNotifStatus(Notification.permission);
+    // Check if Notification API is supported before accessing it
+    if ('Notification' in window && typeof Notification !== 'undefined') {
+      setNotifStatus(Notification.permission);
+    } else {
+      setNotifStatus('denied'); // Treat unsupported as denied
+      setNotifMessage('Notifications are not supported on this device/browser.');
+    }
   }, []);
 
   const handleEnableNotifications = async () => {
