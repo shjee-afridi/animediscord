@@ -86,7 +86,7 @@ Welcome to **AnimeDiscord.com**, the next-generation Discord server directory. D
 ## 📊 Analytics Dashboard
 
 ### Day-wise Analytics with Spike Detection
-![Daily Analytics Dashboard - Screenshot Coming Soon](https://via.placeholder.com/800x400/1a1a1a/ffffff?text=Daily+Analytics+Dashboard+Screenshot)
+![image](https://github.com/user-attachments/assets/943b6641-b798-40cc-b704-5af28221f17a)
 
 *Advanced daily analytics showing traffic patterns, user engagement spikes, and performance metrics*
 
