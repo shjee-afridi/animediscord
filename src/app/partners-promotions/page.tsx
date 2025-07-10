@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Discord Server Partners & Promotions - Featured Communities',
     description: 'Discover our featured partner Discord servers and exclusive promotional offers for premium anime communities.',
-    url: 'https://animediscord.com/partners-promotions',
+    url: 'https://www.animediscord.com/partners-promotions',
     siteName: 'Anime Discord',
     type: 'website',
     images: [

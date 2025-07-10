@@ -29,7 +29,7 @@ export default function TermsClient() {
               name: 'Terms of Service - Anime Discord',
               description:
                 'Terms of Service, licensing, copyright, and legal information for Anime Discord',
-              url: 'https://animediscord.com/terms',
+              url: 'https://www.animediscord.com/terms',
               mainEntity: {
                 '@type': 'DigitalDocument',
                 name: 'Terms of Service',

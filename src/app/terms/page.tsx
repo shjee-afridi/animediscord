@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms of Service - Anime Discord',
     description: 'Terms of Service, licensing, and copyright information for Anime Discord server directory.',
-    url: 'https://animediscord.com/terms',
+    url: 'https://www.animediscord.com/terms',
     type: 'website',
   },
 };

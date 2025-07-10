@@ -4,6 +4,22 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      // Redirect non-www to www
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'animediscord.com',
+          },
+        ],
+        destination: 'https://www.animediscord.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     // legacyBrowsers: false,
     esmExternals: 'loose',

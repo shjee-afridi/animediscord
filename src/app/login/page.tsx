@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Login to Anime Discord - Access Premium SFW Communities',
     description: 'Login to your Anime Discord account to access premium SFW anime communities and exclusive content.',
-    url: 'https://animediscord.com/login',
+    url: 'https://www.animediscord.com/login',
     siteName: 'Anime Discord',
     type: 'website',
     images: [

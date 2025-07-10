@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'Anime Discord Home - Best SFW Anime Discord Servers',
   description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
   alternates: {
-    canonical: 'https://animediscord.com/home'
+    canonical: 'https://www.animediscord.com/home'
   },
   openGraph: {
     title: 'Anime Discord Home - Best SFW Anime Discord Servers',
     description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
-    url: 'https://animediscord.com/home',
+    url: 'https://www.animediscord.com/home',
     siteName: 'Anime Discord',
     type: 'website',
   },

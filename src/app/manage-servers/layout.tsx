@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: 'Manage Discord Servers - Anime Discord Dashboard',
   description: 'Manage your Discord servers on Anime Discord. Add, edit, and promote your SFW anime Discord servers to reach more members.',
   alternates: {
-    canonical: 'https://animediscord.com/manage-servers'
+    canonical: 'https://www.animediscord.com/manage-servers'
   },
   openGraph: {
     title: 'Manage Discord Servers - Anime Discord Dashboard',
     description: 'Manage your Discord servers on Anime Discord. Add, edit, and promote your SFW anime Discord servers to reach more members.',
-    url: 'https://animediscord.com/manage-servers',
+    url: 'https://www.animediscord.com/manage-servers',
     siteName: 'Anime Discord',
     type: 'website',
   },

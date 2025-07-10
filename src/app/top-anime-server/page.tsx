@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Top Anime Discord Server - #1 Ranked SFW Anime Community',
     description: 'Discover the #1 ranked anime Discord server with the most active SFW anime community and exclusive content.',
-    url: 'https://animediscord.com/top-anime-server',
+    url: 'https://www.animediscord.com/top-anime-server',
     siteName: 'Anime Discord',
     type: 'website',
     images: [
