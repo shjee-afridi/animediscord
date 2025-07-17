@@ -28,6 +28,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  // Check if there's a token refresh error
+  if (session.error === 'RefreshAccessTokenError') {
+    return res.status(401).json({ error: 'Please log in again to continue' });
+  }
+
   const client = await clientPromise;
   const db = client.db('discord');
   const bumps = db.collection('bumps');

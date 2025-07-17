@@ -3,6 +3,51 @@ import DiscordProvider from 'next-auth/providers/discord'
 import type { JWT } from "next-auth/jwt";
 import type { Session, User, Account } from "next-auth";
 
+// Extend the session type to include error
+declare module "next-auth" {
+  interface Session {
+    error?: string;
+    accessToken?: string;
+  }
+}
+
+async function refreshAccessToken(token: JWT) {
+  try {
+    const url = "https://discord.com/api/oauth2/token";
+    
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      method: "POST",
+      body: new URLSearchParams({
+        client_id: process.env.DISCORD_CLIENT_ID!,
+        client_secret: process.env.DISCORD_CLIENT_SECRET!,
+        grant_type: "refresh_token",
+        refresh_token: token.refreshToken as string,
+      }),
+    });
+
+    const refreshedTokens = await response.json();
+
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.access_token,
+      expiresAt: Date.now() / 1000 + refreshedTokens.expires_in,
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+    };
+  } catch (error) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
+
 export const authOptions = {
   providers: [
     DiscordProvider({
@@ -21,16 +66,26 @@ export const authOptions = {
     async jwt({ token, account, user }: { token: JWT; account?: Account | null; user?: User | null }) {
       if (account) {
         token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+        token.expiresAt = account.expires_at;
       }
       if (user) {
         token.id = user.id;
       }
-      return token;
+
+      // Check if token is expired and refresh it
+      if (Date.now() < (token.expiresAt as number) * 1000) {
+        return token;
+      }
+
+      // Token is expired, try to refresh it
+      return await refreshAccessToken(token);
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       session.user = session.user ?? {};
       (session.user as { id: string }).id = token.id as string;
       session.accessToken = token.accessToken;
+      session.error = token.error as string;
       return session;
     },
   },

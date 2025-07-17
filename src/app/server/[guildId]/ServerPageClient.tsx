@@ -253,7 +253,12 @@ export default function ServerPageClient({ params }: { params: { guildId: string
       if (data.nextBump) {
         setBumpCooldown(new Date(data.nextBump).getTime() - Date.now());
       }
-      setBumpError(data.error || 'Failed to bump');
+      // Handle token refresh errors specifically
+      if (data.error === 'Please log in again to continue') {
+        setBumpError('Your session has expired. Please log out and log back in to continue.');
+      } else {
+        setBumpError(data.error || 'Failed to bump');
+      }
     }
     setBumpLoading(false);
   };
