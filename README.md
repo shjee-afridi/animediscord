@@ -253,6 +253,6 @@ This project welcomes contributions! Here's how you can help:
 
 ---
 
-**[View Live Demo](https://serverdirectory-dusky.vercel.app/)** • **[Documentation](docs/)** • **[API Reference](api-docs/)**
+**[View Live Demo](https://serverdirectory-dusky.vercel.app/)**
 
 </div>
