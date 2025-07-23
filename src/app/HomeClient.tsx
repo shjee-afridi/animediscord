@@ -345,10 +345,10 @@ export default function HomeClient() {
       <footer className="w-full flex flex-col items-center justify-center text-xs text-gray-400 py-2 mt-8 border-t border-gray-800 bg-transparent flex-shrink-0">
         <div className="flex flex-col items-center gap-2">
           <span>
-            HentaiDiscord 2025 &middot; <a href="/terms" className="underline hover:text-blue-400">Terms</a> &middot; <a href="/privacy" className="underline hover:text-blue-400">Privacy</a>
+            AnimeDiscord 2025 &middot; <a href="/terms" className="underline hover:text-blue-400">Terms</a> &middot; <a href="/privacy" className="underline hover:text-blue-400">Privacy</a>
           </span>
           <span className="text-gray-500">
-            Also check out: <a href="https://www.animediscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">AnimeDiscord.com</a> - Anime Discord Servers
+            Also check out: <a href="https://www.hentaidiscord.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-400 text-blue-300">HentaiDiscord.com</a> - NSFW Discord Servers
           </span>
         </div>
       </footer>
