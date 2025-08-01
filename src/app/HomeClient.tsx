@@ -121,8 +121,10 @@ export default function HomeClient() {
 
   // Wrap setSearch in debounce (300ms delay)
   const debouncedSetSearch = useCallback(
-    debounce((value: string) => setSearch(value), 300),
-    [setSearch]
+    debounce((value: string) => {
+      setSearch(value);
+    }, 300),
+    []
   );
 
   // Responsive: close dropdowns on outside click
@@ -142,7 +144,7 @@ export default function HomeClient() {
       <StructuredData />
       {/* Add h1 for SEO */}
       <h1 className="visually-hidden">
-        Hentai Discord – Discover and Share the Best NSFW Anime Servers
+        Anime Discord – Discover and Share the Best SFW Anime Servers
       </h1>
       {/* Modern Search Bar with dark theme support */}
       <form

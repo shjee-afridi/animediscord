@@ -12,12 +12,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/home`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
       url: `${baseUrl}/servers`,
       lastModified: new Date(),
       changeFrequency: 'hourly',
@@ -43,22 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // SEO Landing Pages - High priority for crawlers
+  // SEO Landing Pages - Consolidated to avoid duplicate content
   const seoPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/promote-discord-server`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/advertise-discord-server`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/bump-discord-server`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -70,25 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/find-discord-servers`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/discord-server-marketing`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/best-discord-servers`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/discord-server-list`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,

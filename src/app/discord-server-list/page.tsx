@@ -1,45 +1,50 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Metadata } from 'next';
 
-export default function DiscordServerListPage() {
+// Redirect component that sends users to the directory page
+export default function DiscordServerListRedirect() {
   const router = useRouter();
 
-  // No automatic redirect - only manual button for users
+  useEffect(() => {
+    // Redirect to directory page after a brief delay
+    const timer = setTimeout(() => {
+      router.replace('/discord-server-directory');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [router]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Discord Server List</h1>
-        <p className="text-lg mb-6">
-          This page contains SEO optimized content. Click below to visit our main directory.
+    <main className="flex flex-col min-h-screen items-center justify-center p-8 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black transition-colors">
+      <div className="max-w-md w-full bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 text-center border border-gray-700 shadow-lg">
+        <h1 className="text-2xl font-bold text-white mb-4">
+          Redirecting...
+        </h1>
+        <p className="text-gray-300 text-sm mb-6">
+          This page has been moved to our main directory to provide you with a better server listing experience.
         </p>
-        <button 
-          onClick={() => router.push('/')}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Go to Home Page
-        </button>
+        <div className="mb-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mx-auto"></div>
+        </div>
+        <p className="text-gray-400 text-xs">
+          You&apos;ll be automatically redirected to our server directory in a moment...
+        </p>
       </div>
-      
-      <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}>
-        <h1>Discord Server List - Complete Server Listing 2025</h1>
-        <h2>Comprehensive Discord Server List and Database</h2>
-        <p>Browse our extensive discord server list featuring thousands of servers. List your discord server, find new communities, and explore the most comprehensive discord server database available.</p>
-        
-        <h2>Server Listing Features</h2>
-        <p>Discord server list, server list, list discord server, list server, discord server listings, server listings, discord listings, discord server database, server database, discord database, discord server registry, server registry, discord registry, discord server directory, server directory, discord directory, discord server index, server index, discord index, discord server catalog, server catalog, discord catalog.</p>
-        
-        <h2>List Management and Organization</h2>
-        <p>Discord server collection, server collection, discord collection, discord server gallery, server gallery, discord gallery, discord server showcase, server showcase, discord showcase, discord server compilation, server compilation, discord compilation, discord server aggregation, server aggregation, discord aggregation, discord server curation, server curation, discord curation.</p>
-        
-        <h2>Server Discovery Through Lists</h2>
-        <p>Browse discord servers, explore discord servers, discover discord servers through lists, find discord servers in lists, search discord server lists, navigate discord server lists, filter discord server lists, sort discord server lists, categorize discord server lists, organize discord server lists, manage discord server lists, maintain discord server lists.</p>
-        
-        <h2>Listing Benefits and Features</h2>
-        <p>Discord server visibility through listing, server exposure via lists, discord promotion through listing, server marketing via lists, discord advertising through listing, server growth via lists, discord traffic through listing, server members via lists, discord engagement through listing, server activity via lists, discord popularity through listing, server recognition via lists.</p>
-      </div>
-    </div>
+    </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Redirecting - Discord Server List',
+  description: 'This page has been moved. Redirecting to our comprehensive Discord server directory.',
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: 'https://www.animediscord.com/discord-server-directory'
+  },
+};

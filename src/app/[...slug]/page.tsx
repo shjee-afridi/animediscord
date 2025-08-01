@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import HomePage from '../home/page';
 
 export async function generateMetadata({ params }: { params: { slug?: string[] } }): Promise<Metadata> {
   const searchTerm = params.slug ? params.slug.join(' ') : '';

@@ -1,27 +1,31 @@
 // src/app/home/page.tsx
 import { Metadata } from 'next';
-import HomeClient from '../HomeClient';
+import HomeRedirectClient from './HomeRedirectClient';
 
 export const metadata: Metadata = {
-  title: 'Anime Discord Home - Best SFW Anime Discord Servers',
-  description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
+  title: 'Page Moved - Anime Discord',
+  description: 'This page has been moved to prevent duplicate content. Click to visit our main homepage and discover the best anime Discord servers.',
   alternates: {
-    canonical: 'https://www.animediscord.com/home'
+    canonical: 'https://www.animediscord.com/'
+  },
+  robots: {
+    index: false,
+    follow: true,
   },
   openGraph: {
-    title: 'Anime Discord Home - Best SFW Anime Discord Servers',
-    description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
-    url: 'https://www.animediscord.com/home',
+    title: 'Page Moved - Anime Discord',
+    description: 'This page has been moved to prevent duplicate content. Visit our main homepage to discover anime Discord servers.',
+    url: 'https://www.animediscord.com/',
     siteName: 'Anime Discord',
     type: 'website',
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Anime Discord Home - Best SFW Anime Discord Servers',
-    description: 'Welcome to the Anime Discord Home page. Discover top anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
+    card: 'summary',
+    title: 'Page Moved - Anime Discord',
+    description: 'This page has been moved to prevent duplicate content. Visit our main homepage.',
   },
 };
 
-export default function HomeWithCanonical() {
-  return <HomeClient />;
+export default function HomeRedirectPage() {
+  return <HomeRedirectClient />;
 }

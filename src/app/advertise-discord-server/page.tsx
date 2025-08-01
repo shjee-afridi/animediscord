@@ -1,45 +1,50 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Metadata } from 'next';
 
-export default function AdvertiseDiscordServerPage() {
+// Redirect component that sends users to the main promotion page
+export default function AdvertiseDiscordServerRedirect() {
   const router = useRouter();
 
-  // No automatic redirect - only manual button for users
+  useEffect(() => {
+    // Redirect to main promotion page after a brief delay
+    const timer = setTimeout(() => {
+      router.replace('/promote-discord-server');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [router]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Advertise Your Discord Server</h1>
-        <p className="text-lg mb-6">
-          This page contains SEO optimized content. Click below to visit our main directory.
+    <main className="flex flex-col min-h-screen items-center justify-center p-8 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black transition-colors">
+      <div className="max-w-md w-full bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 text-center border border-gray-700 shadow-lg">
+        <h1 className="text-2xl font-bold text-white mb-4">
+          Redirecting...
+        </h1>
+        <p className="text-gray-300 text-sm mb-6">
+          This page has been moved to our main server promotion guide to provide you with better, consolidated information.
         </p>
-        <button 
-          onClick={() => router.push('/')}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Go to Home Page
-        </button>
+        <div className="mb-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mx-auto"></div>
+        </div>
+        <p className="text-gray-400 text-xs">
+          You&apos;ll be automatically redirected to our promotion guide in a moment...
+        </p>
       </div>
-      
-      <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}>
-        <h1>Advertise Discord Server - Complete Server Advertising Guide 2025</h1>
-        <h2>How to Advertise Your Discord Server for Maximum Growth</h2>
-        <p>Discover the best methods to advertise discord server, promote discord server, and grow your discord community. Learn effective discord server advertising strategies, server marketing techniques, and promotional methods.</p>
-        
-        <h2>Discord Server Advertising Strategies</h2>
-        <p>Advertise discord server, advertise server, discord server advertising, server advertising, discord advertising, server promotion, discord promotion, server marketing, discord marketing, discord server promotion, promote discord server, promote server, discord server marketing, server growth, discord growth, discord boost, server boost, discord visibility, server visibility, discord exposure, server exposure, discord traffic, server traffic.</p>
-        
-        <h2>Effective Server Advertising Methods</h2>
-        <p>Discord server directory, server directory, discord directory, discord server list, server list, list discord server, list server, discord server listings, server listings, discord server database, server database, discord database, discord server registry, server registry, discord registry, discord server index, server index, discord index, discord server catalog, server catalog, discord catalog.</p>
-        
-        <h2>Advanced Advertising Techniques</h2>
-        <p>Discord server advertising campaigns, server advertising methods, discord advertising strategies, server promotional techniques, discord marketing campaigns, server advertising tools, discord promotional methods, server marketing strategies, discord advertising platforms, server promotional campaigns, discord marketing tools, server advertising guides, discord promotional strategies, server marketing methods, discord advertising techniques, server promotional tools.</p>
-        
-        <h2>Server Marketing and Promotion</h2>
-        <p>Discord server publicizing, server publicizing, discord publicizing, discord server popularizing, server popularizing, discord popularizing, discord server endorsing, server endorsing, discord endorsing, discord server recommending, server recommending, discord recommending, discord server suggesting, server suggesting, discord suggesting, discord server advocating, server advocating, discord advocating, discord server supporting, server supporting, discord supporting.</p>
-      </div>
-    </div>
+    </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Redirecting - Advertise Discord Server',
+  description: 'This page has been moved. Redirecting to our comprehensive server promotion guide.',
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: 'https://www.animediscord.com/promote-discord-server'
+  },
+};

@@ -7,6 +7,12 @@ Disallow: /api/auth
 Disallow: /login
 Disallow: /manage-servers
 Disallow: /add-server
+Disallow: /home
+Disallow: /advertise-discord-server
+Disallow: /bump-discord-server
+Disallow: /find-discord-servers
+Disallow: /discord-server-marketing
+Disallow: /discord-server-list
 
 # SEO Landing Pages - Allow all crawlers but discourage user access
 Allow: /promote-discord-server

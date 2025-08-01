@@ -1,46 +1,181 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { FaRocket, FaBullhorn, FaUsers, FaChartLine, FaHome } from 'react-icons/fa';
+import { Metadata } from 'next';
 
 export default function PromoteDiscordServerPage() {
   const router = useRouter();
 
-  // No automatic redirect - only manual button for users
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Promote Your Discord Server</h1>
-        <p className="text-lg mb-6">
-          This page contains SEO optimized content. Click below to visit our main directory.
-        </p>
-        <button 
-          onClick={() => router.push('/')}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Go to Home Page
-        </button>
+    <main className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black transition-colors">
+      {/* Header */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
+            <FaRocket className="text-blue-400" />
+            Promote Your Discord Server
+          </h1>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            Learn proven strategies to grow your Discord community, attract active members, and boost engagement with our comprehensive promotion guide.
+          </p>
+        </div>
+
+        {/* Main CTA */}
+        <div className="text-center mb-12">
+          <button 
+            onClick={() => router.push('/')}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            <FaHome className="inline mr-2" />
+            Browse Our Server Directory
+          </button>
+        </div>
+
+        {/* Content Sections */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {/* Promotion Strategies */}
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              <FaBullhorn className="text-yellow-400" />
+              Effective Promotion Strategies
+            </h2>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 mt-1">•</span>
+                <span><strong>List on directories:</strong> Submit your server to multiple Discord server directories for maximum visibility</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 mt-1">•</span>
+                <span><strong>Social media promotion:</strong> Share your server on Twitter, Reddit, and other social platforms</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 mt-1">•</span>
+                <span><strong>Content marketing:</strong> Create valuable content that showcases your community&apos;s unique value</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 mt-1">•</span>
+                <span><strong>Partner with creators:</strong> Collaborate with streamers, YouTubers, and influencers in your niche</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Growth Tips */}
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              <FaUsers className="text-green-400" />
+              Community Growth Tips
+            </h2>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong>Engage actively:</strong> Be present in your server and respond to members quickly</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong>Host events:</strong> Regular events keep members engaged and attract new users</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong>Create quality content:</strong> Valuable channels and resources make people want to stay</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong>Incentivize invites:</strong> Reward members who successfully bring new active users</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Marketing Techniques */}
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              <FaChartLine className="text-purple-400" />
+              Advanced Marketing
+            </h2>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-purple-400 mt-1">•</span>
+                <span><strong>SEO optimization:</strong> Optimize your server name, description, and tags for discoverability</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-400 mt-1">•</span>
+                <span><strong>Cross-promotion:</strong> Partner with similar servers for mutual growth</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-400 mt-1">•</span>
+                <span><strong>Analytics tracking:</strong> Monitor your growth metrics and adjust strategies accordingly</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-400 mt-1">•</span>
+                <span><strong>Bumping services:</strong> Use Discord bots to regularly bump your server on listing sites</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Best Practices */}
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              <FaRocket className="text-orange-400" />
+              Best Practices
+            </h2>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start gap-2">
+                <span className="text-orange-400 mt-1">•</span>
+                <span><strong>Quality over quantity:</strong> Focus on attracting engaged members rather than just numbers</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-400 mt-1">•</span>
+                <span><strong>Consistent branding:</strong> Maintain a professional and recognizable server identity</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-400 mt-1">•</span>
+                <span><strong>Community guidelines:</strong> Clear rules create a welcoming environment for new members</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-400 mt-1">•</span>
+                <span><strong>Regular updates:</strong> Keep your server description and content fresh and current</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-12 bg-gray-800/30 rounded-xl p-8 border border-gray-700">
+          <h3 className="text-2xl font-bold text-white mb-4">Ready to Grow Your Server?</h3>
+          <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+            Start implementing these strategies today and watch your Discord community flourish. 
+            List your server in our directory to get discovered by thousands of potential members.
+          </p>
+          <button 
+            onClick={() => router.push('/add-server')}
+            className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg mr-4"
+          >
+            List Your Server
+          </button>
+          <button 
+            onClick={() => router.push('/')}
+            className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300"
+          >
+            Browse Servers
+          </button>
+        </div>
       </div>
-      
-      {/* SEO Content - Hidden from users but visible to crawlers */}
-      <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}>
-        <h1>Promote Discord Server - Best Server Promotion Guide 2025</h1>
-        <h2>How to Promote Your Discord Server Effectively</h2>
-        <p>Learn how to promote discord server, advertise discord server, and grow your discord community with our comprehensive guide. Discover the best discord server promotion strategies, discord server marketing techniques, and discord server advertising methods.</p>
-        
-        <h2>Discord Server Promotion Methods</h2>
-        <p>Promote server, promote discord server, discord server promotion, advertise discord server, advertise server, bump discord server, bump server, list discord server, list server, discord server list, server list, discord server directory, server directory, discord directory, find discord server, search discord server, discover discord server, join discord server, discord server finder, server finder, discord server search, server search, discord server advertising, server advertising, discord promotion, server promotion, discord marketing, server marketing, discord growth, server growth, discord boost, server boost, discord visibility, server visibility, discord exposure, server exposure, discord traffic, server traffic, discord members, server members, discord community, server community, discord engagement, server engagement.</p>
-        
-        <h2>Best Discord Server Promotion Strategies</h2>
-        <p>Discord Server Hub, Discord Server Center, Discord Server Portal, Discord Server Platform, Discord Server Network, Discord Server Database, Discord Server Registry, Discord Server Index, Discord Server Catalog, Discord Server Collection, Discord Server Gallery, Discord Server Showcase, Discord Server Listings, Discord Server Reviews, Discord Server Ratings, Discord Server Rankings, Discord Server Stats, Discord Server Analytics, Discord Server Metrics, Discord Server Data, Discord Server Info, Discord Server Details.</p>
-        
-        <h2>Advanced Discord Promotion Techniques</h2>
-        <p>Discord Server Promotion, Discord Server Marketing, Discord Server Advertising, Discord Server Publicizing, Discord Server Popularizing, Discord Server Endorsing, Discord Server Recommending, Discord Server Suggesting, Discord Server Proposing, Discord Server Advocating, Discord Server Supporting, Discord Server Backing, Discord Server Championing, Discord Server Defending, Discord Server Upholding, Discord Server Maintaining, Discord Server Sustaining, Discord Server Preserving, Discord Server Protecting, Discord Server Safeguarding, Discord Server Securing, Discord Server Ensuring, Discord Server Guaranteeing.</p>
-        
-        <h2>Discord Server Growth and Visibility</h2>
-        <p>Discord Server Growing, Discord Server Expanding, Discord Server Increasing, Discord Server Boosting, Discord Server Amplifying, Discord Server Magnifying, Discord Server Intensifying, Discord Server Strengthening, Discord Server Reinforcing, Discord Server Solidifying, Discord Server Consolidating, Discord Server Stabilizing, Discord Server Balancing, Discord Server Harmonizing, Discord Server Synchronizing, Discord Server Coordinating, Discord Server Organizing, Discord Server Arranging, Discord Server Structuring, Discord Server Ordering.</p>
-      </div>
-    </div>
+    </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Promote Your Discord Server - Growth Strategies & Marketing Guide',
+  description: 'Learn proven strategies to promote your Discord server, attract active members, and grow your community. Comprehensive guide to Discord server marketing and promotion.',
+  keywords: 'promote discord server, discord server promotion, discord marketing, server growth, discord advertising, community building',
+  alternates: {
+    canonical: 'https://www.animediscord.com/promote-discord-server'
+  },
+  openGraph: {
+    title: 'Promote Your Discord Server - Growth Strategies & Marketing Guide',
+    description: 'Learn proven strategies to promote your Discord server and grow your community.',
+    url: 'https://www.animediscord.com/promote-discord-server',
+    siteName: 'Anime Discord',
+    type: 'article',
+  },
+};
