@@ -10,12 +10,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Missing guildId' });
   }
 
+  if (!botToken) {
+    console.error('DISCORD_BOT_TOKEN environment variable is missing');
+    return res.status(500).json({ error: 'Bot token not configured' });
+  }
+
   try {
     // Get guild info
     const guildRes = await fetch(`https://discord.com/api/v10/guilds/${guildId}?with_counts=true`, {
       headers: { Authorization: `Bot ${botToken}` },
     });
+    
     if (!guildRes.ok) {
+      console.error(`Discord API Error: ${guildRes.status} ${guildRes.statusText}`, {
+        guildId,
+        botTokenPresent: !!botToken,
+        botTokenPrefix: botToken ? botToken.substring(0, 10) + '...' : 'missing'
+      });
       return res.status(guildRes.status).json({ error: 'Failed to fetch guild info' });
     }
     const guild = await guildRes.json();
