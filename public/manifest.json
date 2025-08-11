@@ -1,6 +1,6 @@
 {
-  "name": "animediscord",
-  "short_name": "animediscord",
+  "name": "AnimeDiscord",
+  "short_name": "AnimeDiscord",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
