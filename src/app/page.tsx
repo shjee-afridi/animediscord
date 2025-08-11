@@ -3,15 +3,15 @@ import { Metadata } from 'next';
 import HomeClient from './HomeClient';
 
 export const metadata: Metadata = {
-  title: 'Best Anime Discord Servers - Top NSFW Anime Communities 2025',
-  description: 'Discover the best anime Discord servers with active NSFW anime communities, roleplay, and exclusive content. Join thousands of members in premium 18+ Discord servers.',
+  title: 'Best Anime Discord Servers - Top SFW Anime Communities 2025',
+  description: 'Discover the best anime Discord servers with active SFW anime communities, roleplay, and exclusive content. Join thousands of members in premium 18+ Discord servers.',
   keywords: 'anime discord, nsfw anime discord, best anime server, 18+ anime community, anime roleplay, adult anime chat, exclusive anime content, discord nsfw, top anime server, anime chatroom',
   alternates: {
     canonical: 'https://www.animediscord.com'
   },
   openGraph: {
-    title: 'Best Anime Discord Servers - Top NSFW Anime Communities 2025',
-    description: 'Discover the best anime Discord servers with active NSFW anime communities, roleplay, and exclusive content. Join thousands of members in premium 18+ Discord servers.',
+    title: 'Best Anime Discord Servers - Top SFW Anime Communities 2025',
+    description: 'Discover the best anime Discord servers with active SFW anime communities, roleplay, and exclusive content. Join thousands of members in premium 18+ Discord servers.',
     url: 'https://www.animediscord.com',
     siteName: 'Anime Discord',
     type: 'website',
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Best Anime Discord Servers - Top NSFW Anime Communities 2025',
-    description: 'Discover the best anime Discord servers with active NSFW anime communities, roleplay, and exclusive content.',
+    title: 'Best Anime Discord Servers - Top SFW Anime Communities 2025',
+    description: 'Discover the best anime Discord servers with active SFW anime communities, roleplay, and exclusive content.',
   },
 };
 
