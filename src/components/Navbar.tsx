@@ -16,6 +16,7 @@ export default function Navbar() {
 
   // Get user's browser info
   const getBrowserInfo = () => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') return 'other';
     const userAgent = navigator.userAgent;
     if (userAgent.includes('Chrome') && !userAgent.includes('Edg')) return 'chrome';
     if (userAgent.includes('Firefox')) return 'firefox';
@@ -93,12 +94,17 @@ export default function Navbar() {
 
   // Check if we're on Safari without deferredPrompt support
   const isSafariWithoutPrompt = () => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
     const browser = getBrowserInfo();
     return browser === 'safari' && !deferredPrompt && !isInstalled;
   };
 
   // Get Safari install steps
   const getSafariInstallSteps = () => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return ['Please access this from a Safari browser to see installation instructions'];
+    }
+    
     const userAgent = navigator.userAgent;
     const isMobile = /iPhone|iPad|iPod/i.test(userAgent);
     
@@ -141,6 +147,10 @@ export default function Navbar() {
 
   // Get uninstall steps based on platform
   const getUninstallSteps = () => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return ['Please access this from a browser to see uninstall instructions'];
+    }
+    
     const userAgent = navigator.userAgent;
     const platform = navigator.platform;
     
