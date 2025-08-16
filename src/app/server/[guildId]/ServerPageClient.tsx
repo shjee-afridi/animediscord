@@ -667,7 +667,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
             >Copy Link</button>
           </div>
           {server.widgetId && (
-            <DiscordWidget serverId={server.widgetId} theme="dark" serverOwnerId={server.userId} />
+            <DiscordWidget serverId={server.widgetId} theme="dark" />
           )}
           {/* Bump Button */}
           <div className="mb-4 flex flex-col sm:flex-row gap-2 items-center">

@@ -72,7 +72,7 @@ export default function Profile() {
               alt="Profile picture"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-full border-4 border-red-500 shadow object-cover bg-gray-800"
+              className="w-20 h-20 rounded-full border-4 border-blue-500 shadow object-cover bg-gray-800"
             />
           ) : (
             <FaUserCircle className="w-20 h-20 text-gray-500 bg-gray-800 rounded-full border-4 border-blue-500 shadow" />
