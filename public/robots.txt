@@ -1,20 +1,15 @@
 User-agent: *
 Allow: /
+
+# Block private/admin areas
 Disallow: /dashboard
 Disallow: /profile
-Disallow: /admin
-Disallow: /api/auth
-Disallow: /login
+Disallow: /admin/
+Disallow: /api/auth/
 Disallow: /manage-servers
-Disallow: /add-server
-Disallow: /home
-Disallow: /advertise-discord-server
-Disallow: /bump-discord-server
-Disallow: /find-discord-servers
-Disallow: /discord-server-marketing
-Disallow: /discord-server-list
+Disallow: /server/*/details
 
-# SEO Landing Pages - Allow all crawlers but discourage user access
+# Allow SEO landing pages for all crawlers
 Allow: /promote-discord-server
 Allow: /advertise-discord-server
 Allow: /bump-discord-server
@@ -24,6 +19,52 @@ Allow: /discord-server-marketing
 Allow: /best-discord-servers
 Allow: /discord-server-list
 Allow: /anime-discord-servers
+Allow: /partners-promotions
+Allow: /top-anime-server
+Allow: /category/
+Allow: /server/
+Allow: /search/
+Allow: /leaderboards
+Allow: /reviews
+Allow: /terms
+Allow: /privacy
+Allow: /login
+Allow: /home
+Allow: /add-server
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Allow: /anime-discord-servers
+Allow: /best-discord-servers
+Allow: /discord-server-directory
+Allow: /promote-discord-server
+Allow: /advertise-discord-server
+Allow: /bump-discord-server
+Allow: /find-discord-servers
+Allow: /discord-server-marketing
+Allow: /discord-server-list
+Allow: /partners-promotions
+Allow: /top-anime-server
+Allow: /category/
+Allow: /server/
+Allow: /search/
+Allow: /leaderboards
+Allow: /reviews
+Allow: /terms
+Allow: /privacy
+Allow: /login
+Allow: /home
+Allow: /add-server
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /admin/
+Disallow: /api/auth/
+Disallow: /manage-servers
+Disallow: /server/*/details
+
+# Crawl delay for aggressive bots
+User-agent: *
+Crawl-delay: 1
 
 Sitemap: https://www.animediscord.com/sitemap.xml
-Sitemap: https://www.animediscord.com/api/sitemap

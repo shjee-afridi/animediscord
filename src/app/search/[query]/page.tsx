@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';

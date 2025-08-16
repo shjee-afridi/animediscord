@@ -1,6 +1,6 @@
-'use client'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { useEffect, useMemo, useState } from 'react'
+'use client';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect, useMemo, useState } from 'react';
 import ServerListItem from '@/components/ServerListItem';
 import { FaUserCircle, FaServer, FaDiscord, FaSignOutAlt, FaStar, FaRegStar, FaEnvelope, FaCommentDots } from 'react-icons/fa';
 import useSWR from 'swr';
@@ -72,7 +72,7 @@ export default function Profile() {
               alt="Profile picture"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-full border-4 border-blue-500 shadow object-cover bg-gray-800"
+              className="w-20 h-20 rounded-full border-4 border-red-500 shadow object-cover bg-gray-800"
             />
           ) : (
             <FaUserCircle className="w-20 h-20 text-gray-500 bg-gray-800 rounded-full border-4 border-blue-500 shadow" />

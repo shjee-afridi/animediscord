@@ -1,9 +1,12 @@
-'use client'
-import useSWR from 'swr';
+'use client';
 
+import { Metadata } from 'next';
+import useSWR from 'swr';
 import ServerListItem from '@/components/ServerListItem';
 import Spinner from '@/components/Spinner';
 
+// We'll need to handle metadata differently for client components
+// The generateMetadata will be moved to a layout.tsx file
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 

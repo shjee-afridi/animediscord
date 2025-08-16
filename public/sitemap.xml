@@ -1,48 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a fallback sitemap. The main dynamic sitemap is generated at /sitemap.xml -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.animediscord.com/</loc>
+    <loc>https://www.animediscord.com/</loc>
     <priority>1.0</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/server</loc>
+    <loc>https://www.animediscord.com/anime-discord-servers</loc>
     <priority>0.8</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/servers</loc>
+    <loc>https://www.animediscord.com/best-discord-servers</loc>
     <priority>0.8</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/category</loc>
-    <priority>0.7</priority>
+    <loc>https://www.animediscord.com/discord-server-directory</loc>
+    <priority>0.9</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/search</loc>
-    <priority>0.7</priority>
+    <loc>https://www.animediscord.com/promote-discord-server</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/dashboard</loc>
+    <loc>https://www.animediscord.com/add-server</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.animediscord.com/leaderboards</loc>
     <priority>0.6</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/manage-servers</loc>
+    <loc>https://www.animediscord.com/reviews</loc>
     <priority>0.6</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/add-server</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>http://www.animediscord.com/profile</loc>
+    <loc>https://www.animediscord.com/partners-promotions</loc>
     <priority>0.5</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/terms</loc>
-    <priority>0.4</priority>
+    <loc>https://www.animediscord.com/top-anime-server</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>http://www.animediscord.com/privacy</loc>
-    <priority>0.4</priority>
+    <loc>https://www.animediscord.com/home</loc>
+    <priority>0.5</priority>
+    <changefreq>weekly</changefreq>
   </url>
-  <!-- Add more URLs as needed -->
+  <url>
+    <loc>https://www.animediscord.com/find-discord-servers</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.animediscord.com/discord-server-marketing</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.animediscord.com/discord-server-list</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.animediscord.com/terms</loc>
+    <priority>0.4</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.animediscord.com/privacy</loc>
+    <priority>0.4</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

@@ -1,5 +1,5 @@
-// src/app/terms/page.tsx
 'use client';
+
 import Navbar from '@/components/Navbar';
 import ClientProviders from '@/components/ClientProviders';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';

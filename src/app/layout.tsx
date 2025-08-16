@@ -7,8 +7,25 @@ import BootstrapClient from '@/components/BootstrapClient';
 
 export const metadata = {
   metadataBase: new URL('https://www.animediscord.com'),
-  title: 'Anime Discord',
-  description: 'Discover and share Discord servers!',
+  title: {
+    default: 'Anime Discord - Best Discord Server Directory & Community Hub',
+    template: '%s | Anime Discord'
+  },
+  description: 'Discover the best Discord servers! Browse anime, gaming, SFW communities and more. Join thousands of active Discord servers. Promote your server for free and grow your community.',
+  keywords: [
+    'discord servers', 'best discord servers', 'discord server list', 'discord directory',
+    'anime discord', 'gaming discord', 'discord communities', 'join discord servers',
+    'promote discord server', 'discord server promotion', 'server directory',
+    'find discord servers', 'discord server finder', 'server list', 'discord hub'
+  ],
+  authors: [{ name: 'Anime Discord Team' }],
+  creator: 'Anime Discord',
+  publisher: 'Anime Discord',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   manifest: '/manifest.json',
   icons: [
     { rel: 'icon', url: '/favicon.ico' },
@@ -19,10 +36,11 @@ export const metadata = {
     { rel: 'icon', url: "/icon-96x96.png", sizes: "96x96" },
     { rel: 'icon', url: "/icon-128x128.png", sizes: "128x128" },
     { rel: 'icon', url: "/icon-256x256.png", sizes: "256x256" },
+    { rel: 'apple-touch-icon', url: '/icon-192x192.png' },
   ],
   openGraph: {
-    title: 'Anime Discord',
-    description: 'Discover and share Discord servers!',
+    title: 'Anime Discord - Best Discord Server Directory & Community Hub',
+    description: 'Discover the best Discord servers! Browse anime, gaming, SFW communities and more. Join thousands of active Discord servers.',
     url: 'https://www.animediscord.com',
     siteName: 'Anime Discord',
     images: [
@@ -30,17 +48,35 @@ export const metadata = {
         url: '/icon-512x512.png',
         width: 512,
         height: 512,
-        alt: 'Anime Discord Logo',
+        alt: 'Anime Discord - Discord Server Directory',
       },
     ],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
-    card: 'summary',
-    title: 'Anime Discord',
-    description: 'Discover and share Discord servers!',
+    card: 'summary_large_image',
+    title: 'Anime Discord - Best Discord Server Directory & Community Hub',
+    description: 'Discover the best Discord servers! Browse anime, gaming, SFW communities and more. Join thousands of active Discord servers.',
     images: ['/icon-512x512.png'],
+    creator: '@animediscord',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+    other: {
+      'msvalidate.01': 'your-bing-verification-code',
+    },
   },
 };
 

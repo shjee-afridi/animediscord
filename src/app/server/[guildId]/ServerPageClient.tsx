@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import Spinner from '@/components/Spinner';
+import DiscordWidget from '@/components/DiscordWidget';
 import Image from 'next/image';
 import { Bar } from 'react-chartjs-2';
 import DailyStatsChart from '@/components/DailyStatsChart';
@@ -666,18 +667,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
             >Copy Link</button>
           </div>
           {server.widgetId && (
-            <div className="my-6">
-              <iframe
-                src={`https://discord.com/widget?id=${server.widgetId}&theme=dark`}
-                width="100%"
-                height="320"
-                allowTransparency={true}
-                frameBorder="0"
-                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-                title="Discord Widget"
-                className="rounded-xl border border-neutral-800 shadow"
-              ></iframe>
-            </div>
+            <DiscordWidget serverId={server.widgetId} theme="dark" serverOwnerId={server.userId} />
           )}
           {/* Bump Button */}
           <div className="mb-4 flex flex-col sm:flex-row gap-2 items-center">
