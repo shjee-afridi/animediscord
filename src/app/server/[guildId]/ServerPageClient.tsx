@@ -182,6 +182,18 @@ export default function ServerPageClient({ params }: { params: { guildId: string
 
   // Stats (admin only)
   const isAdmin = session && server && session.user?.id && server.userId === session.user.id;
+  
+  // Check if user is Discord server admin
+  const { data: adminGuilds = [] } = useSWR(
+    session?.accessToken ? '/api/discord/guilds' : null,
+    fetcher
+  );
+  const adminGuildIds = useMemo(() => (Array.isArray(adminGuilds) ? adminGuilds.map((g: any) => g.id) : []), [adminGuilds]);
+  const isDiscordAdmin = adminGuildIds.includes(params.guildId);
+  
+  // User can refresh widget if they're the server lister OR Discord server admin
+  const canRefreshWidget = isAdmin || isDiscordAdmin;
+  
   const { data: stats } = useSWR(
     isAdmin ? `/api/servers/${params.guildId}/stat` : null,
     fetcher
@@ -667,7 +679,12 @@ export default function ServerPageClient({ params }: { params: { guildId: string
             >Copy Link</button>
           </div>
           {server.widgetId && (
-            <DiscordWidget serverId={server.widgetId} theme="dark" />
+            <DiscordWidget 
+              serverId={server.widgetId} 
+              theme="dark" 
+              canRefresh={canRefreshWidget}
+              showDebug={isAdmin || isDiscordAdmin}
+            />
           )}
           {/* Bump Button */}
           <div className="mb-4 flex flex-col sm:flex-row gap-2 items-center">
@@ -718,7 +735,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
               >Edit Listing</a>
               
               {/* Test Data Generator (only show if no recent daily data) */}
-              {(!dailyStats || dailyStats.slice(-7).every((day: any) => day.visit === 0 && day.copy === 0 && day.join === 0 && day.bump === 0)) && (
+              {/* {(!dailyStats || dailyStats.slice(-7).every((day: any) => day.visit === 0 && day.copy === 0 && day.join === 0 && day.bump === 0)) && (
                 <button
                   onClick={async () => {
                     if (confirm('Generate sample analytics data for the last 14 days? This will help you see how the daily analytics work.')) {
@@ -733,7 +750,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
                   }}
                   className="px-4 py-2 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition text-sm"
                 >Generate Sample Data</button>
-              )}
+              )} */}
             </div>
           )}
           {/* Stats (Admin) */}
