@@ -84,8 +84,8 @@ export default function ServerEditPage({ params }: { params: { guildId: string }
         .then(guilds => {
           const isAdmin = Array.isArray(guilds) && guilds.some((g: any) => g.id === server.guildId);
           setIsGuildAdmin(isAdmin);
-          // Only block if NOT admin AND NOT original lister
-          if (!isAdmin && session.user?.id !== server.userId) setNotAllowed(true);
+          // Block if NOT original lister OR NOT Discord admin (require BOTH)
+          if (session.user?.id !== server.userId || !isAdmin) setNotAllowed(true);
         });
     }
   }, [session, server]);

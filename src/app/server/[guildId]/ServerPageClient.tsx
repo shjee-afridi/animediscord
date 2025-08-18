@@ -194,6 +194,9 @@ export default function ServerPageClient({ params }: { params: { guildId: string
   // User can refresh widget if they're the server lister OR Discord server admin
   const canRefreshWidget = isAdmin || isDiscordAdmin;
   
+  // User can edit/manage server if they're the original lister AND still Discord admin
+  const canEditServer = isAdmin && isDiscordAdmin;
+  
   const { data: stats } = useSWR(
     isAdmin ? `/api/servers/${params.guildId}/stat` : null,
     fetcher
@@ -727,7 +730,7 @@ export default function ServerPageClient({ params }: { params: { guildId: string
             )}
           </div>
           {/* Admin Controls */}
-          {isAdmin && (
+          {canEditServer && (
             <div className="mb-4 flex flex-wrap gap-2">
               <a
                 href={`/server/${params.guildId}/details`}
@@ -753,9 +756,26 @@ export default function ServerPageClient({ params }: { params: { guildId: string
               )} */}
             </div>
           )}
-          {/* Stats (Admin) */}
+          {/* Show warning if user is original lister but lost Discord admin permissions */}
+          {isAdmin && !isDiscordAdmin && (
+            <div className="mb-4 p-3 bg-red-900/30 border border-red-700/50 rounded-lg">
+              <p className="text-red-300 text-sm font-medium">🚫 Editing Disabled</p>
+              <p className="text-red-200 text-xs mt-1">
+                You originally listed this server, but you&apos;re no longer a Discord admin. You need Discord admin permissions to edit server listings.
+              </p>
+            </div>
+          )}
+          {/* Stats (Original Lister Only) */}
           {isAdmin && (stats || dailyStats) && (
             <div className="mb-6 space-y-4">
+              {!isDiscordAdmin && (
+                <div className="mb-4 p-3 bg-yellow-900/30 border border-yellow-700/50 rounded-lg">
+                  <p className="text-yellow-300 text-sm font-medium">⚠️ Limited Access</p>
+                  <p className="text-yellow-200 text-xs mt-1">
+                    You can view stats as the original lister, but you need Discord admin permissions to edit the server listing.
+                  </p>
+                </div>
+              )}
               {/* Daily Analytics Chart */}
               {dailyStats && (
                 <DailyStatsChart 

@@ -65,8 +65,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // ignore Discord API errors, fallback to original lister check
     }
     const serverDoc = await collection.findOne({ guildId: String(guildId) });
-    if (!isSiteAdmin && !isGuildAdmin && (!serverDoc || serverDoc.userId !== session.user.id)) {
-      return res.status(403).json({ error: 'You are not allowed to edit this server. You must be a Discord server admin, the original lister, or a site admin.' });
+    // Site admins can always edit, otherwise require BOTH original lister AND Discord admin
+    if (!isSiteAdmin && (!serverDoc || serverDoc.userId !== session.user.id || !isGuildAdmin)) {
+      return res.status(403).json({ error: 'You are not allowed to edit this server. You must be both the original lister and a Discord server admin, or a site admin.' });
     }
   }
 

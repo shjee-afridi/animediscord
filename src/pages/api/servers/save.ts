@@ -184,6 +184,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(403).json({ error: 'This server is blocked from being listed again by any admin.' });
     }
 
+    // Check if this is an update to existing listing
+    const existingServer = await collection.findOne({ guildId: guildId.toString() });
+    if (existingServer) {
+      // For updates, user must be BOTH original lister AND Discord admin (unless site admin)
+      let isSiteAdmin = false;
+      if (session.user?.email) {
+        const { ADMIN_EMAILS } = await import('@/lib/isAdmin');
+        isSiteAdmin = ADMIN_EMAILS.includes(session.user.email);
+      }
+      
+      if (!isSiteAdmin && (existingServer.userId !== session.user.id || !isGuildAdmin)) {
+        return res.status(403).json({ error: 'You can only edit servers you originally listed and must be a Discord admin of the server.' });
+      }
+    } else {
+      // For new listings, user just needs to be Discord admin
+      if (!isGuildAdmin) {
+        return res.status(403).json({ error: 'You must be a Discord admin of the server to list it.' });
+      }
+    }
+
     await collection.updateOne(
       { guildId: guildId.toString() },
       {
