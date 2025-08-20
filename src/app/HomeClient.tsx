@@ -1,10 +1,9 @@
 // src/app/HomeClient.tsx
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ServerListItem from '@/components/ServerListItem';
 import debounce from 'lodash.debounce';
-import { useCallback } from 'react';
 import useSWR from 'swr';
 import Spinner from '@/components/Spinner';
 import { FaSearch, FaChevronDown, FaGlobe, FaLayerGroup, FaFire, FaClock, FaPlus } from 'react-icons/fa';
@@ -120,11 +119,11 @@ export default function HomeClient() {
   }, [selectedCategory, selectedLanguage, minMembers, selectedTags]);
 
   // Wrap setSearch in debounce (300ms delay)
-  const debouncedSetSearch = useCallback(
-    debounce((value: string) => {
+  const debouncedSetSearch = useMemo(
+    () => debounce((value: string) => {
       setSearch(value);
     }, 300),
-    []
+    [setSearch]
   );
 
   // Responsive: close dropdowns on outside click

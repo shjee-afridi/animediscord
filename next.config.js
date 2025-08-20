@@ -24,6 +24,9 @@ const nextConfig = {
     // legacyBrowsers: false,
     esmExternals: 'loose',
   },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production', // Remove console logs in production
+  },
   swcMinify: true, // Ensure JS is minified
   images: {
     domains: [

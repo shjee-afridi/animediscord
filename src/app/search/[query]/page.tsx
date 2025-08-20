@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import ServerListItem from '@/components/ServerListItem';
@@ -42,8 +42,8 @@ export default function SearchPage({ params }: { params: { query: string } }) {
   const [page, setPage] = useState(1);
 
   // Debounced fetch function
-  const fetchServers = useCallback(
-    debounce(async (searchValue: string, lang: string) => {
+  const fetchServers = useMemo(
+    () => debounce(async (searchValue: string, lang: string) => {
       setLoading(true);
       try {
         const url = `/api/servers/search?query=${encodeURIComponent(searchValue)}${lang && lang !== 'All' ? `&language=${encodeURIComponent(lang)}` : ''}`;
@@ -53,7 +53,7 @@ export default function SearchPage({ params }: { params: { query: string } }) {
         setLoading(false);
       }
     }, 300),
-    []
+    [setLoading, setServers]
   );
 
   useEffect(() => {

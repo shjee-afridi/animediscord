@@ -18,5 +18,7 @@
         { "key": "Cache-Control", "value": "no-store" }
       ]
     }
-  ]
+  ],
+  "buildCommand": "next build",
+  "framework": "nextjs"
 }

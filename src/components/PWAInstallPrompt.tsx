@@ -41,13 +41,21 @@ export function usePWAInstall() {
 
   useEffect(() => {
     const handler = (e: any) => {
-      e.preventDefault();
+      // Only prevent default if we actually want to show custom prompt
+      // For now, let's not prevent it to avoid the console warning
+      console.log('PWA install prompt available');
       setDeferredPrompt(e);
-      setShowPrompt(true);
+      
+      // Only show custom prompt after user interaction or delay
+      setTimeout(() => {
+        if (!isInstalled) {
+          setShowPrompt(true);
+        }
+      }, 5000); // Show after 5 seconds
     };
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
+  }, [isInstalled]);
 
   useEffect(() => {
     // If not installed and no deferredPrompt, set reason
