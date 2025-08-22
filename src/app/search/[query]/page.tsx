@@ -123,7 +123,7 @@ export default function SearchPage({ params }: { params: { query: string } }) {
           <FaChevronDown className={`ml-2 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
         </button>
         {showLanguageDropdown && (
-          <div className="absolute z-20 w-full bg-gray-900 border border-gray-700 rounded-xl shadow-lg mt-2 animate-fade-in">
+          <div className="absolute z-20 w-full bg-gray-900 border border-gray-700 rounded-xl shadow-lg mt-2 animate-fade-in max-h-60 overflow-y-auto">
             {LANGUAGES.map(lang => (
               <button
                 key={lang}
